@@ -9,6 +9,14 @@ iPhone Shortcut ──▶ Cloudflare Worker ──▶ Spotify Web API
    (one tap)         (auth + logic)        (save track)
 ```
 
+## In action
+
+Works hands-free with Siri — including from an Apple Watch, so your phone can stay in your pocket:
+
+<img src="images/watch-in-action.jpeg" alt="Apple Watch showing the voice command 'Hey Siri Save Song' and Siri replying 'OK.'" width="480">
+
+Say **"Hey Siri, Save Song"** — Siri runs the Shortcut, the Worker saves the currently playing track, and the song title flashes up on your watch.
+
 Why a Worker in the middle? Spotify's API needs OAuth tokens that expire and have to be refreshed. The Worker keeps your Spotify credentials safe as server-side secrets and handles the token refresh, so the Shortcut itself stays dumb and simple — it only knows one URL and one app token.
 
 ## Get the Shortcut
