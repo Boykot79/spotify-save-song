@@ -1,6 +1,6 @@
 # Save Song 🎵
 
-Save the Spotify track you're currently listening to — with one tap on your iPhone.
+Save the Spotify track you're currently listening to, with one tap on your iPhone.
 
 An iPhone **Shortcut** calls a tiny **Cloudflare Worker**, which talks to the **Spotify Web API**: it checks what's playing right now and adds it to your library. You get a notification with the song title back on your phone.
 
@@ -11,30 +11,30 @@ iPhone Shortcut ──▶ Cloudflare Worker ──▶ Spotify Web API
 
 ## In action
 
-Works hands-free with Siri — including from an Apple Watch, so your phone can stay in your pocket:
+Works hands-free with Siri, including from an Apple Watch, so your phone can stay in your pocket:
 
 <img src="images/watch-in-action.jpeg" alt="Apple Watch showing the voice command 'Hey Siri Save Song' and Siri replying 'OK.'" width="480">
 
-Say **"Hey Siri, Save Song"** — Siri runs the Shortcut, the Worker saves the currently playing track, and the song title flashes up on your watch.
+Say **"Hey Siri, Save Song"** and Siri runs the Shortcut: the Worker saves the currently playing track, and the song title flashes up on your watch.
 
-Why a Worker in the middle? Spotify's API needs OAuth tokens that expire and have to be refreshed. The Worker keeps your Spotify credentials safe as server-side secrets and handles the token refresh, so the Shortcut itself stays dumb and simple — it only knows one URL and one app token.
+Why a Worker in the middle? Spotify's API needs OAuth tokens that expire and have to be refreshed. The Worker keeps your Spotify credentials safe as server-side secrets and handles the token refresh, so the Shortcut itself stays dumb and simple: it only knows one URL and one app token.
 
 ## Get the Shortcut
 
-**Option A — download the ready-made Shortcut:**
+**Option A: download the ready-made Shortcut**
 
 > ⬇️ [Download **Save Song.shortcut**](https://github.com/Boykot79/spotify-save-song/raw/main/Save%20Song.shortcut)
 
-Open the downloaded file on your iPhone (or Mac) and Shortcuts will offer to add it. Then edit the Shortcut and replace the two placeholders in the "Get Contents of URL" action: the URL (`https://YOUR-WORKER.workers.dev`) and the `X-App-Token` header value (`YOUR-APP-TOKEN`) — you'll get both from [Setup](#setup) below.
+Open the downloaded file on your iPhone (or Mac) and Shortcuts will offer to add it. Then edit the Shortcut and replace the two placeholders in the "Get Contents of URL" action: the URL (`https://YOUR-WORKER.workers.dev`) and the `X-App-Token` header value (`YOUR-APP-TOKEN`). You'll get both from [Setup](#setup) below.
 
-**Option B — build it yourself** (3 actions):
+**Option B: build it yourself** (3 actions):
 
 1. **Get Contents of URL**
    - URL: `https://spotify-saver.<your-subdomain>.workers.dev`
    - Method: `GET`
    - Headers: `X-App-Token` → *your APP_TOKEN (see below)*
-2. **Get Dictionary Value** — key: `title` (add another for `artist` if you like)
-3. **Show Notification** — e.g. `Saved: [title]`
+2. **Get Dictionary Value** with key `title` (add another for `artist` if you like)
+3. **Show Notification**, e.g. `Saved: [title]`
 
 Add it to your Home Screen, the Action Button, or the Lock Screen for true one-tap saving.
 
@@ -56,7 +56,7 @@ Authorize your own account once, with the two scopes this Worker needs:
    https://accounts.spotify.com/authorize?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=http://127.0.0.1:8888/callback&scope=user-read-currently-playing%20user-library-modify
    ```
 
-2. After you approve, you'll land on a `127.0.0.1:8888/callback?code=...` URL that won't load — that's fine. Copy the `code` from the address bar.
+2. After you approve, you'll land on a `127.0.0.1:8888/callback?code=...` URL that won't load. That's fine, just copy the `code` from the address bar.
 
 3. Exchange the code for a refresh token (fill in your values):
 
@@ -87,7 +87,7 @@ npx wrangler secret put SPOTIFY_REFRESH_TOKEN
 npx wrangler secret put APP_TOKEN
 ```
 
-`APP_TOKEN` is a password you invent yourself — it's what stops strangers from poking your Worker. Generate a good one with:
+`APP_TOKEN` is a password you invent yourself. It's what stops strangers from poking your Worker. Generate a good one with:
 
 ```bash
 openssl rand -hex 16
@@ -95,7 +95,7 @@ openssl rand -hex 16
 
 ### 4. Connect the Shortcut
 
-Put your Worker URL and your `APP_TOKEN` into the Shortcut (see [Get the Shortcut](#get-the-shortcut)) — done.
+Put your Worker URL and your `APP_TOKEN` into the Shortcut (see [Get the Shortcut](#get-the-shortcut)) and you're done.
 
 ## API
 
@@ -110,8 +110,8 @@ Put your Worker URL and your `APP_TOKEN` into the Shortcut (see [Get the Shortcu
 
 ## Security notes
 
-- All credentials live as [Worker secrets](https://developers.cloudflare.com/workers/configuration/secrets/) — nothing sensitive is in this repo, and nothing sensitive should ever be committed to your fork either.
-- If you share your own copy of the Shortcut, **remove your Worker URL and APP_TOKEN first** — anyone with those two values can save songs to *your* library.
+- All credentials live as [Worker secrets](https://developers.cloudflare.com/workers/configuration/secrets/). Nothing sensitive is in this repo, and nothing sensitive should ever be committed to your fork either.
+- If you share your own copy of the Shortcut, **remove your Worker URL and APP_TOKEN first**. Anyone with those two values can save songs to *your* library.
 
 ## License
 
