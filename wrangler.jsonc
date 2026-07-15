@@ -1,0 +1,7 @@
+{
+  "name": "spotify-saver",
+  "main": "src/index.js",
+  "workers_dev": true,
+  "preview_urls": true,
+  "compatibility_date": "2025-01-01"
+}
