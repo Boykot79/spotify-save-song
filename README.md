@@ -13,11 +13,11 @@ Why a Worker in the middle? Spotify's API needs OAuth tokens that expire and hav
 
 ## Get the Shortcut
 
-**Option A — install via iCloud link:**
+**Option A — download the ready-made Shortcut:**
 
-> ⬇️ [Add the "Save Song" Shortcut](PASTE_ICLOUD_LINK_HERE)
+> ⬇️ [Download **Save Song.shortcut**](https://github.com/Boykot79/spotify-save-song/raw/main/Save%20Song.shortcut)
 
-You still need your own Worker running (see [Setup](#setup)) — when you install the Shortcut, put in **your** Worker URL and **your** app token.
+Open the downloaded file on your iPhone (or Mac) and Shortcuts will offer to add it. Then edit the Shortcut and replace the two placeholders in the "Get Contents of URL" action: the URL (`https://YOUR-WORKER.workers.dev`) and the `X-App-Token` header value (`YOUR-APP-TOKEN`) — you'll get both from [Setup](#setup) below.
 
 **Option B — build it yourself** (3 actions):
 
